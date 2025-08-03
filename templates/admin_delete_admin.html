@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8" />
+    <title>Admin löschen - Passwort bestätigen</title>
+</head>
+<body>
+    <h2>Admin löschen</h2>
+    <form method="POST" action="/admin/delete_user/admin">
+        <label for="admin_password">Admin-Passwort:</label><br />
+        <input type="password" id="admin_password" name="admin_password" required /><br /><br />
+        <button type="submit">Admin löschen</button>
+    </form>
+    <p><a href="/admin/users">Zurück zur Benutzerverwaltung</a></p>
+</body>
+</html>

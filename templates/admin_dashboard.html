@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8" />
+    <title>Admin-Dashboard</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 40px auto;
+            max-width: 600px;
+            background: #f0f4f8;
+            color: #333;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        p {
+            text-align: center;
+            font-size: 1.1rem;
+            margin-bottom: 40px;
+            color: #555;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 14px 28px;
+            margin: 10px 15px 10px 0;
+            background-color: #3498db;
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            border-radius: 8px;
+            transition: background-color 0.3s ease;
+            box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
+        }
+
+        .button:hover {
+            background-color: #217dbb;
+            box-shadow: 0 6px 20px rgba(33, 125, 187, 0.5);
+        }
+
+        .logout {
+            background-color: #e74c3c;
+            box-shadow: 0 4px 12px rgba(231, 76, 60, 0.3);
+        }
+
+        .logout:hover {
+            background-color: #c0392b;
+            box-shadow: 0 6px 20px rgba(192, 57, 43, 0.5);
+        }
+
+        .status {
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            color: #2c3e50;
+        }
+
+        .buttons-container {
+            text-align: center;
+        }
+
+        form {
+            display: inline;
+        }
+    </style>
+</head>
+<body>
+    <h1>Willkommen, {{ username }}</h1>
+    <p>Dies ist dein Admin-Dashboard.</p>
+
+    <div class="status">
+        maintrance: <span style="color: {{ 'red' if maintrance_mode else 'green' }}">{{ 'Aktiviert' if maintrance_mode else 'Deaktiviert' }}</span>
+    </div>
+
+    <div class="buttons-container">
+        <a href="/admin_logout" class="button logout">Logout</a>
+        <a href="/admin/users" class="button">Benutzer verwalten</a>
+        <a href="/forum" class="button">Forum ansehen</a>
+        <a href="/admin/messages/create" class="button">Admin-Nachricht erstellen</a>
+        <form method="POST">
+            {% if maintrance_mode %}
+                <button type="submit" name="toggle" value="off" class="button">Wartungsmodus deaktivieren</button>
+            {% else %}
+                <button type="submit" name="toggle" value="on" class="button">Wartungsmodus aktivieren</button>
+            {% endif %}
+        </form>
+    </div>
+</body>
+</html>

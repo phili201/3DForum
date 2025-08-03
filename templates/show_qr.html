@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8" />
+    <title>2FA Setup</title>
+</head>
+<body>
+    <h2>2FA Einrichtung</h2>
+    <p>Scanne den QR-Code mit deiner Authenticator-App:</p>
+    <img src="data:image/png;base64,{{ qr_code }}" alt="QR-Code für 2FA" />
+    <p>Oder gib den folgenden Code manuell ein:</p>
+    <p><strong>{{ secret }}</strong></p>
+    <p><a href="/login">Jetzt zum Login</a></p>
+</body>
+</html>

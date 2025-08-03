@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Profil</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f7fa;
+            color: #333;
+            margin: 0;
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
+        }
+        .profile-container {
+            background: white;
+            padding: 30px 40px;
+            border-radius: 10px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+            max-width: 400px;
+            width: 100%;
+        }
+        h1 {
+            margin-bottom: 20px;
+            font-weight: 700;
+            color: #007BFF;
+            text-align: center;
+        }
+        p {
+            font-size: 16px;
+            margin: 12px 0;
+            line-height: 1.4;
+        }
+        strong {
+            color: #555;
+        }
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 12px 0;
+            margin: 15px 0;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            color: white;
+            background-color: #007BFF;
+            transition: background-color 0.3s ease;
+            box-sizing: border-box;
+        }
+        .btn:hover {
+            background-color: #0056b3;
+        }
+        .btn-danger {
+            background-color: #dc3545;
+        }
+        .btn-danger:hover {
+            background-color: #a71d2a;
+        }
+        form {
+            margin-top: 25px;
+        }
+        .links {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .links a {
+            color: #007BFF;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .links a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="profile-container">
+        <h1>Willkommen, {{ username }}!</h1>
+
+        <p><strong>Nutzername:</strong> {{ username }}</p>
+        <p><strong>2FA aktiviert:</strong> {{ 'Ja' if user_data['2fa_secret'] else 'Nein' }}</p>
+
+        <a href="/change_password" class="btn">Passwort ändern</a>
+        <a href="/reset_2fa" class="btn">2FA zurücksetzen</a>
+
+        <h2>Account löschen</h2>
+        <form action="/delete_account" method="GET">
+            <button type="submit" class="btn btn-danger">Account löschen</button>
+        </form>
+
+        <div class="links">
+            <a href="/dashboard">Zurück zum Dashboard</a>
+        </div>
+    </div>
+</body>
+</html>

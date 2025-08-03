@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin – Benutzerverwaltung</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        table { border-collapse: collapse; width: 100%; }
+        th, td { padding: 10px; border: 1px solid #ccc; text-align: left; }
+        button { padding: 5px 10px; margin: 2px; }
+        form { display: inline; }
+    </style>
+</head>
+<body>
+    <h1>Benutzerverwaltung</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Benutzername</th>
+                <th>Aktionen</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+            <tr>
+                <td>{{ user }}</td>
+                <td>
+                    <!-- 2FA zurücksetzen -->
+                    <form method="POST" action="/admin/switch_2fa/{{ user }}">
+                        <button type="submit">2FA zurücksetzen</button>
+                    </form>
+
+                    <!-- QR-Code anzeigen -->
+                    <a href="/admin/show_qr/{{ user }}" target="_blank">
+                        <button type="button">QR anzeigen</button>
+                    </a>
+
+                    <!-- Benutzer löschen -->
+                    <form method="POST" action="/admin/delete_user/{{ user }}" onsubmit="return confirm('Diesen Benutzer wirklich löschen?');">
+                        <button type="submit" style="background-color: #f44336; color: white;">Löschen</button>
+                    </form>
+
+                    <!-- Benutzername ändern -->
+                    <form method="POST" action="/admin/username/switch/{{ user }}">
+                        <input type="text" name="new_username" placeholder="Neuer Name" required>
+                        <button type="submit">Umbenennen</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

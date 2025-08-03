@@ -1,0 +1,27 @@
+<!-- qr_login.html -->
+<!DOCTYPE html>
+<html>
+<head>
+<title>QR Login</title>
+<script>
+function checkLoginStatus() {
+    fetch('/qr_login_status?token={{ token }}')
+        .then(response => response.json())
+        .then(data => {
+            if(data.status === 'confirmed') {
+                // Login erfolgreich, weiterleiten
+                window.location.href = '/dashboard';
+            }
+        });
+}
+
+// Alle 3 Sekunden Status prüfen
+setInterval(checkLoginStatus, 3000);
+</script>
+</head>
+<body>
+<h1>QR-Code Login</h1>
+<img src="data:image/png;base64,{{ qr_code }}" alt="QR Code" />
+<p>Bitte scannen Sie den QR-Code mit Ihrem authentifizierten Gerät.</p>
+</body>
+</html>

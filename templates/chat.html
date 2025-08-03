@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Chat mit {{ other_user }}</title>
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            padding: 20px;
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        #chatContainer {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        #messages {
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            height: 400px;
+            overflow-y: scroll;
+            padding: 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .message {
+            margin-bottom: 12px;
+        }
+
+        .message strong {
+            color: #007bff;
+        }
+
+        #inputArea {
+            display: flex;
+            margin-top: 15px;
+        }
+
+        #msgInput {
+            flex: 1;
+            padding: 10px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 8px 0 0 8px;
+            outline: none;
+        }
+
+        #sendBtn {
+            padding: 10px 20px;
+            font-size: 14px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 0 8px 8px 0;
+            cursor: pointer;
+        }
+
+        #sendBtn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div id="chatContainer">
+        <h2>💬 Chat mit {{ other_user }}</h2>
+        <div id="messages">
+            {% for pm in chat_pms %}
+                <div class="message">
+                    <strong>{{ pm.sender }}:</strong> {{ pm.message }}
+                </div>
+            {% endfor %}
+        </div>
+
+        <div id="inputArea">
+            <input id="msgInput" autocomplete="off" placeholder="Nachricht schreiben..." />
+            <button id="sendBtn">Senden</button>
+        </div>
+    </div>
+
+    <script>
+        const socket = io();
+        const otherUser = "{{ other_user }}";
+        const username = "{{ session['username'] }}";
+        const room = [username, otherUser].sort().join('_');
+
+        socket.emit('join', {other_user: otherUser});
+
+        const msgBox = document.getElementById('messages');
+        msgBox.scrollTop = msgBox.scrollHeight; // Start: ganz unten
+
+        socket.on('receive_message', function(data) {
+            if (data.username !== username) {
+                let div = document.createElement('div');
+                div.classList.add("message");
+                div.innerHTML = `<strong>${data.username}:</strong> ${data.msg}`;
+                msgBox.appendChild(div);
+                msgBox.scrollTop = msgBox.scrollHeight;
+            }
+        });
+
+        document.getElementById('sendBtn').onclick = function() {
+            let input = document.getElementById('msgInput');
+            let msg = input.value.trim();
+            if (msg.length > 0) {
+                socket.emit('send_message', {other_user: otherUser, msg: msg});
+                let div = document.createElement('div');
+                div.classList.add("message");
+                div.innerHTML = `<strong>${username}:</strong> ${msg}`;
+                msgBox.appendChild(div);
+                msgBox.scrollTop = msgBox.scrollHeight;
+                input.value = '';
+            }
+        };
+    </script>
+</body>
+</html>

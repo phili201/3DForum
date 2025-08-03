@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>3D-Community Portal</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f9fafc;
+      color: #333;
+    }
+
+    header {
+      background-color: #007BFF;
+      color: white;
+      padding: 20px 40px;
+      text-align: center;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 28px;
+    }
+
+    main {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 50px 20px;
+    }
+
+    .container {
+      background-color: white;
+      padding: 40px 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      text-align: center;
+      max-width: 400px;
+      width: 100%;
+    }
+
+    .container h2 {
+      margin-bottom: 30px;
+      font-size: 22px;
+      color: #007BFF;
+    }
+
+    .button-container {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    a {
+      text-decoration: none;
+    }
+
+    button {
+      padding: 12px;
+      font-size: 16px;
+      font-weight: bold;
+      border: none;
+      border-radius: 8px;
+      background-color: #007BFF;
+      color: white;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      font-size: 14px;
+      color: #888;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>3D-Druck Community Portal</h1>
+  </header>
+
+  <main>
+    {% if maintrance and not session.get("freigeschaltet") %}
+    <div class="container">
+      <h2>Wartungsmodus aktiv</h2>
+      <p>Diese Website wird zurzeit gewartet. Bitte versuche es später erneut.</p>
+      <div class="button-container">
+        <a href="/wartungscode"><button>Code eingeben</button></a>
+      </div>
+    </div>
+    {% else %}
+    <div class="container">
+      <h2>Willkommen!</h2>
+      <p>Bitte melde dich an oder registriere dich, um Teil der Community zu werden.</p>
+      <div class="button-container">
+        <a href="/login"><button>Login</button></a>
+        <a href="/register"><button>Registrieren</button></a>
+        <a href="/admin_login"><button>Admin Login</button></a>
+      </div>
+    </div>
+    {% endif %}
+  </main>
+
+  <footer>
+    &copy; 2025 3D-Community. Alle Rechte vorbehalten.
+    Bei Fragen oder Problemen, wende dich bitte an den <a href="mailto:prhode@e-mail.de">Admin</a>
+  </footer>
+
+</body>
+</html>

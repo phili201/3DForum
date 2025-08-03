@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Account löschen</title>
+</head>
+<body>
+    <h1>Achtung!</h1>
+    <p>Du bist dabei, deinen Account dauerhaft zu löschen.</p>
+
+    <form action="/delete_account" method="POST">
+        <label for="password">Passwort:</label><br>
+        <input type="password" id="password" name="password" required><br><br>
+
+        <label for="2fa_code">2FA-Code:</label><br>
+        <input type="text" id="2fa_code" name="2fa_code" pattern="\d{6}" placeholder="z. B. 123456" required><br><br>
+
+        <button type="submit" style="color:red;">Löschen bestätigen</button>
+    </form>
+
+    <br>
+    <a href="/profil">Abbrechen und zurück zum Profil</a>
+</body>
+</html>

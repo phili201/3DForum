@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>2FA zurücksetzen</title>
+</head>
+<body>
+    <h1>2FA zurücksetzen für {{ username }}</h1>
+    <p>Scanne diesen QR-Code in deiner Authenticator-App:</p>
+    <img src="data:image/png;base64,{{ qr_code }}" alt="QR-Code"><br><br>
+
+    <form method="POST">
+        <button type="submit">2FA-Zurücksetzung bestätigen</button>
+    </form>
+
+    <br><a href="/login">Zurück zum Login</a>
+</body>
+</html>

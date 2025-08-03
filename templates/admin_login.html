@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Admin Login</title>
+    <style>
+        body {
+            background: #eef2f7;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            color: #333;
+        }
+        .login-container {
+            background: white;
+            padding: 35px 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            max-width: 380px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        h2 {
+            margin-bottom: 25px;
+            text-align: center;
+            color: #007BFF;
+            font-weight: 700;
+            font-size: 28px;
+        }
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 600;
+            color: #555;
+        }
+        input[type="text"], input[type="password"] {
+            width: 100%;
+            padding: 10px 12px;
+            margin-bottom: 18px;
+            border: 1.8px solid #ccc;
+            border-radius: 6px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+            box-sizing: border-box;
+        }
+        input[type="text"]:focus, input[type="password"]:focus {
+            border-color: #007BFF;
+            outline: none;
+            box-shadow: 0 0 5px rgba(0,123,255,0.4);
+        }
+        small {
+            display: block;
+            margin-top: -12px;
+            margin-bottom: 20px;
+            color: #666;
+            font-size: 13px;
+        }
+        button {
+            width: 100%;
+            padding: 12px 0;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        @media (max-width: 420px) {
+            .login-container {
+                padding: 25px 20px;
+                max-width: 95%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h2>Admin Login</h2>
+        <form method="POST" action="/admin_login" novalidate>
+            <label for="username">Benutzername:</label>
+            <input type="text" id="username" name="username" required autocomplete="username" />
+
+            <label for="password">Passwort:</label>
+            <input type="password" id="password" name="password" required autocomplete="current-password" />
+
+            <label for="2fa_code">2FA Code:</label>
+            <input type="text" id="2fa_code" name="2fa_code" pattern="\d{6}" maxlength="6" required inputmode="numeric" autocomplete="one-time-code" />
+            <small>Bitte 6-stelligen Code aus der Authenticator-App eingeben</small>
+
+            <button type="submit">Login</button>
+        </form>
+    </div>
+</body>
+</html>

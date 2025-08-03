@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Nachrichten</title>
+</head>
+<body>
+    <h1>Admin-Nachrichten</h1>
+    {% for msg in messages %}
+        <div style="border: 1px solid #000; margin: 10px; padding: 10px;">
+            <h2>{{ msg.title }}</h2>
+            <p>{{ msg.message }}</p>
+            <small>Datum: {{ msg.date }}</small>
+        </div>
+    {% endfor %}
+</body>
+</html>

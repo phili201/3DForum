@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8" />
+    <title>Posteingang</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        .message {
+            background-color: #fff;
+            border-left: 5px solid #007bff;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .message strong {
+            color: #007bff;
+        }
+
+        .message small {
+            display: block;
+            margin-top: 8px;
+            color: #666;
+        }
+
+        .actions {
+            margin-top: 10px;
+        }
+
+        .btn-delete {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 5px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .btn-delete:hover {
+            background-color: #c82333;
+        }
+
+        .nav-links {
+            margin-top: 20px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            margin-right: 15px;
+            color: #007bff;
+        }
+
+        .nav-links a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h2>📥 Dein Posteingang</h2>
+
+    <div id="nachrichtenbereich">
+        Lade Nachrichten ...
+    </div>
+
+    <div class="nav-links">
+        <a href="/forum">Zurück zum Forum</a>
+        <a href="/pm/send">➕ Neue Nachricht</a>
+    </div>
+
+    <script>
+        function ladeNachrichten() {
+            fetch("/pm/inbox/data")
+                .then(res => res.json())
+                .then(nachrichten => {
+                    const container = document.getElementById("nachrichtenbereich");
+                    container.innerHTML = "";
+                    if (nachrichten.length === 0) {
+                        container.innerHTML = "<p>Du hast keine Nachrichten.</p>";
+                    } else {
+                        nachrichten.forEach(pm => {
+                            container.innerHTML += `
+                                <div class="message">
+                                    <strong>Von:</strong> ${pm.sender} <br>
+                                    <strong>Nachricht:</strong> ${pm.message} <br>
+                                    <small>📅 ${pm.timestamp}</small>
+                                    <div class="actions">
+                                        <form method="POST" action="/pm/delete" onsubmit="return confirm('Möchtest du diese Nachricht wirklich löschen?');" style="display:inline;">
+                                            <input type="hidden" name="timestamp" value="${pm.timestamp}">
+                                            <button type="submit" class="btn-delete">🗑️ Löschen</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            `;
+                        });
+                    }
+                });
+        }
+
+        ladeNachrichten(); // direkt beim Laden der Seite
+        setInterval(ladeNachrichten, 30000); // alle 30 Sekunden
+    </script>
+</body>
+</html>
