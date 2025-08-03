@@ -22,7 +22,7 @@ reset_tokens = {}
 active_login_tokens = {}
 Max_failed_attempts = 3
 lockout_duration = 15 * 60
-Testmode = True
+Testmode = False
 
 
 app = Flask(__name__)
